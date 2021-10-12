@@ -1,0 +1,1864 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>DPIE Housing Map Dashboard</title>  
+  <link rel="shortcut icon" href="#">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+
+<script src="https://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="/pivottable-master-dist/pivot.css" />
+  <!-- Load Leaflet from CDN-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+
+ 
+
+  <link rel="stylesheet" href="/leaflet-search-master/src/leaflet-search.css" />
+
+  <link rel="stylesheet" href="leaflet.zoomhome-master/dist/leaflet.zoomhome.css"/>
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"/>
+
+  
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css"/>
+    
+  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script> 
+  <!-- <script src="bouncemarker.js"> </script> -->
+  <script src="leaflet.zoomhome-master/dist/leaflet.zoomhome.min.js"></script>
+
+  <!-- Load Esri Leaflet from CDN -->
+  <script src="https://unpkg.com/esri-leaflet@3.0.2/dist/esri-leaflet.js"></script>
+
+  <!-- Load Esri Leaflet Renderers from CDN -->
+  <script src="https://unpkg.com/esri-leaflet-renderers@2.1.2/dist/esri-leaflet-renderers.js"></script>
+
+  <script src="https://cdn.rawgit.com/hayeswise/Leaflet.PointInPolygon/v1.0.0/wise-leaflet-pip.js"></script>
+
+  <script src="/leaflet-search-master/src/leaflet-search.js"></script>   
+
+  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>   
+
+
+
+  <script src="https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js"></script>   
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>  
+  <script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js"></script>   
+
+  
+  
+
+
+
+
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.23.0/pivot.min.js"></script>    -->
+
+  <script src="/pivottable-master-dist/pivot.js"></script> 
+
+  <!-- <script src="Zip_Code_Py.js"></script> -->
+  <script src="dataLicenseData.js"></script>
+  <script src="mileStoneData.js"></script>
+  <script src="leaflet-heat.js"></script>
+
+  <!-- <script src="L.Control.Layers.Tree.js"></script> -->
+  <script src="defiant.js-master/dist/defiant.js"></script>
+
+  <!-- <script src="JsonData/CNTYBD_json.js"></script> -->
+  <script src="JsonData/CNTYBD_geojson.js"></script>
+  <script src="JsonData/MUNIBD_geojson.js"></script>
+  <script src="JsonData/ZIPCODE_geojson.js"></script>
+  <script src="JsonData/POLICEDISTRICT_geojson.js"></script>
+  <script src="JsonData/DPIE_DISTRICTS_geojson.js"></script>
+  <script src="JsonData/POLICEBEATS_geojson.js"></script>
+
+  <!-- <script src="JsonData/POLICEBEATS_arr.js"></script> -->
+
+  <!-- <script src="JsonData/POLICEBEATS_geojson_Copy.json"></script> -->
+  
+
+
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+
+  <link rel="stylesheet" href="L.Control.Layers.Tree.css" crossorigin=""/>
+  <script src="L.Control.Layers.Tree.js"></script>
+
+  <!-- POLICEBEATS_geojson -->
+  <!-- PGCOITGIS02_PBEATS.js -->
+
+   <style>
+    html, body, #map { height: 100%;  width: 100%;  margin: 0;  padding: 0;  }
+
+    #basemaps-wrapper {
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    z-index: 400;
+    background: white;
+    padding: 10px;
+    margin-top: 130px;
+    width: 165px;
+    /* padding-top: 65px; */
+  }
+
+  #basemaps-wrapper-new {
+    position: absolute;
+    top: 60px;
+    left: 10px;
+    z-index: 400;
+    background: white;
+    padding: 10px;
+    margin-top: 130px;
+    width: 165px;
+    /* padding-top: 65px; */
+  }
+
+
+  #basemaps {
+    margin-bottom: 5px;
+  }
+  /* .leaflet-top {
+    padding-top: 65px;
+  } */
+
+  #LicenseStatusCheckBoxes {
+    position: absolute;
+    top: 260px;
+    right: 10px;
+    z-index: 400;
+    background: white;
+    padding: 10px;
+    margin-top: 80px;
+    width: 220px;
+    border-color:black;
+  }
+
+  #LicenseCategoryCheckBoxes {
+    position: absolute;
+    top: 120px;
+    right: 10px;
+    z-index: 400;
+    background: white;
+    padding: 10px;
+    margin-top: 105px;
+    width: 165px;
+    border-color:black;
+  }
+
+  #info-pane {
+    position: absolute;
+    top: 200px;
+    right: 10px;
+    z-index: 400;
+    padding: 1em;
+    background: white;
+  }
+
+  #geoCodes {
+    position: absolute;
+    top: 500px;
+    right: 10px;
+    z-index: 400;
+    padding: 1em;
+    background: white;
+  }
+
+  #SDHPS{
+    position: fixed;
+    bottom: 10px; 
+     left: 10px; 
+    z-index: 400;
+    background: white;
+    top: 155px;
+    background-color: transparent;
+    color: black;
+    font-weight: bolder;
+    width: 30px !important;
+    height: 30px !important;
+
+  }
+
+#imgSDHPS{
+    width: 30px !important;
+    height: 30px !important;
+    border-color: black;
+    border-width: 2px;
+}
+
+
+
+
+  #output{
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    z-index: 400;
+    /* background: transparent; */
+    /* top: 600px; */
+    background-color: transparent;
+    color: black;
+    font-weight: bolder;
+    font-size: 25px !important;
+    width: 50%;
+    /* height: 50px; */
+  }
+
+
+
+  .pvtVal{
+    background-color: transparent;
+  }
+
+
+  .leaflet-popup-content-wrapper{
+    text-align: center !important;
+    width: 250px !important;
+  }
+
+/* 
+  table.reference:nth-child(2) tr:nth-child(2)
+{
+    background-color:red;
+} */
+
+
+  /* .c-pivot-table.no-ui {
+  .pvtUi>tbody>tr:first-child>td:first-child, 
+  .pvtAxisContainer,                          
+  .pvtVals {                                  
+    display: none;
+  }
+} */
+
+
+
+
+/* .btnHideTable{
+
+    right: 10px;
+    z-index: 300;
+    background: white;
+    background-color: transparent;
+    color: black;
+    font-weight: bolder;
+} */
+
+
+.toggle-btn {
+    position: absolute;
+    top: 535px;
+    right: 10px;
+    z-index: 400;
+    /* background:blue; */
+    padding: 3px;
+    margin-top: 80px;
+    width: 165px;
+    border-color:black;
+    font-weight: bolder;
+  }
+
+
+  img.huechange { filter: hue-rotate(120deg); }
+
+
+
+
+    #popupTable {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        font-weight: bolder;
+    }
+    #popupTable td, #popupTable th {
+        border: 1px solid #ddd;
+        padding: 5px;
+    }
+    #popupTable tr:nth-child(even){background-color: #f2f2f2;}
+    #popupTable tr:hover {background-color: #ddd;}
+    #popupTable th {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        text-align: left;
+        background-color: #04AA6D;
+        color: white;
+    }
+
+
+    #newpopupTable {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        font-weight: bolder;
+    }
+    #newpopupTable td, #newpopupTable th {
+        border: 1px solid #ddd;
+        padding: 5px;
+    }
+    #newpopupTable tr:nth-child(even){background-color: #f2f2f2;}
+    #newpopupTable tr:hover {background-color: #ddd;}
+    #newpopupTable th {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        text-align: left;
+        background-color: #04AA6D;
+        color: white;
+    }
+
+
+
+    :checked {
+
+  border: 1px solid blue;
+}
+
+
+.LICENID{
+    display:inline-block;
+    font-weight: bolder;
+    font-size: larger;
+}
+
+.LICENID_new{
+    display:inline-block;
+    width: 20px;
+    height: 20px;
+    /* font-weight: bolder; */
+    /* font-size: 8px; */
+}
+
+table.dataTable{
+    margin: 0px !important;;
+}
+
+table.dataTable tbody td {
+    padding: 2px !important;
+}
+
+#Licdetails{
+    /* width: 568px !important; */
+    width: 100% !important;
+}
+
+.chkbxClass{
+    padding-left: 5px !important;
+}
+
+/* .modal-title{
+    width: 400px !important;
+} */
+
+.modal-header{
+    padding-top: 10px !important;
+    padding-bottom: 2px !important;
+    font-weight: 15px !important;
+}
+
+.modal-body{
+    padding: 5px !important;
+    font-size: 14px !important;
+}
+
+
+h4.modal-title{
+    display: inline-block !important;
+    font-weight: bolder !important;
+}
+
+/* div.modal-footer{
+  position: relative !important;
+} */
+
+div.modal-footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 10px !important;
+}
+
+/* div#page-wrap {
+  width:900px;
+  height: 99px;
+  margin: 0 auto;
+  padding-left: 126px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+} */
+
+div.maincontainer{
+  border-style: solid;
+  border-color:black;
+  border-width: 1px;
+  position: absolute;
+  top: 150px;
+  right: 10px;
+  z-index: 400;
+  background: lightgray;
+  padding: 3px;
+  margin-top: 525px;
+  width: 165px;
+  height: auto;
+}
+
+
+.tooltip-inner {
+    min-width: 100px;
+    max-width: 100%;
+    min-height: 25px;
+    /* font-size: 20px; */
+}
+
+
+.fa-square{
+  border-color:transparent !important;
+}
+
+
+.containerNoAddress{
+  width: 20px;
+  height: 20px;
+  margin: 1px;
+  display: inline-block;
+  color: transparent;
+}
+
+
+.SFR {color: #3D90CE;}
+.MFR {color: green;}
+.STR-H {color: red;}
+
+.modal-content {
+  width: 100% !important;
+}
+
+</style>
+</head>
+<body>
+  <div id="map"></div>
+  <!-- <div id="info-pane" class="leaflet-bar"><B>Prince George County</B></div> -->
+  <!-- <div id="geoCodes" class="leaflet-bar"><B></B></div> -->
+
+  <div id="basemaps-wrapper" class="leaflet-bar">
+    <select id="basemaps">
+      <!-- <option value="Openstreetmap">Openstreetmap</option> -->
+      <option value="Topographic">Topographic</option>
+      <option value="Streets">Streets</option>
+      <option value="NationalGeographic">National Geographic</option>
+      <!-- <option value="Oceans">Oceans</option> -->
+      <option value="Gray">Gray</option>
+      <option value="DarkGray">Dark Gray</option>
+      <option value="Imagery">Imagery</option>
+      <option value="ImageryClarity">Imagery (Clarity)</option>
+      <option value="ImageryFirefly">Imagery (Firefly)</option>
+      <option value="ShadedRelief">Shaded Relief</option>
+      <!-- <option value="Physical">Physical</option> -->
+    </select>
+  </div>
+
+
+  <div class="chkboxinputs" id="LicenseStatusCheckBoxes"></div>
+  <div class="chkboxinputs" id="LicenseCategoryCheckBoxes"></div>
+
+
+  <div id="page-wrap"> <div id='mainDivContain' class="maincontainer"></div> </div>
+
+
+
+  <!-- <div class="popup" onclick="myFunction()">Click me!
+    <span class="popuptext" id="myPopup">Popup text...</span>
+    <table id="Licdetails" class="table table-striped" style="font-size: 12px;"><thead></thead>
+  </div>
+  -->
+
+
+  <!-- The Modal -->
+  <div class="modal fade bd-example-modal-lg" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <!-- <div class="modal-title"></div> -->
+          <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">X</button> -->
+          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+            <table id="Licdetails" class="table table-striped">
+      </table>
+    </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+ 
+
+ 
+  <!-- DPIE_Housing_Performance_Statistics -->
+
+  <!-- <a id='SDHPS' target="_blank" href="http://pgcdpiedata01/Reports/report/Momentum%20Housing%20Licenses/DPIE_Housing_Performance_Statistics">DPIE_Housing_Performance_Statistics</a> -->
+
+
+  <a id='SDHPS' target="_blank" href="http://pgcdpiedata01/Reports/report/Momentum%20Housing%20Licenses/DPIE_Housing_Performance_Statistics"><img src="SSRS_ICON.png" id="imgSDHPS" title="DPIE_Housing_Performance_Statistics" style="width:42px;height:42px;"></a>
+
+  <div id="output">
+  </div>
+
+  <button type="button" class="toggle-btn btn btn-primary">Summary Counts</button> 
+
+  <script>
+
+  var arrForTable = [];
+
+
+for(var i = 0; i <= dataLicenses.features.length-1; i= i+1 ){
+
+  arrForTable.push( { "License Category" : dataLicenses.features[i].properties.License_Category
+                , LicStatus : dataLicenses.features[i].properties.LicStatus
+                , "Milestone Classification" : dataLicenses.features[i].properties.Milestone_Report, count : 1 });
+
+}
+
+$(function(){
+
+$("#output").pivot(
+    
+                    arrForTable
+          ,
+            {
+                rows: ["License Category", 'LicStatus'],
+                cols: ["Milestone Classification"]
+            }
+        )
+
+});
+
+
+console.log(arrForTable)
+
+// $("#output.pvttable").click(function (e) {
+//     window.open('data:application/vnd.ms-excel,' +'<table>' +$("#SearchTable").html()+ '</table>');
+//     e.preventDefault();
+// });
+
+
+
+
+$(document).ready(function(){
+    // Toggles paragraphs display
+    $(".toggle-btn").click(function(){
+        $("#output").toggle();
+    });
+});
+
+// console.log($( ".pvtAxisLabel" ));
+
+// ["License_Category", "LicStatus"]
+
+
+
+const convertArrayToObject = (array, key) => {
+  const initialValue = {};
+  return array.reduce((obj, item) => {
+    return {
+      ...obj, [item]: 0,
+    };
+  }, initialValue);
+};
+
+
+
+// -76.973532718032189, 39.01594596739362
+
+// console.log(arrForTable);
+
+var layerLabels;
+
+
+var map = L.map('map', {zoomControl: false,
+			zoom: 11,
+			center: new L.latLng(38.812884, -76.84603)
+			// , layers: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+            // , layers: L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png')
+      // ,  crs: L.CRS.EPSG3857
+		});
+
+var layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+var zoomHome = L.Control.zoomHome();
+        zoomHome.addTo(map);
+
+// L.control.layers(layer, overlays,{collapsed:false,}).addTo(map);
+
+var CNTYBD_geojson_Layer = L.geoJson(CNTYBD_geojson, {style: function (feature) { return {color: 'blue', weight: 1, fillOpacity: 0 };}});   
+CNTYBD_geojson_Layer.addTo(map)
+
+var MUNIBD_geojson_Layer = L.geoJson(MUNIBD_geojson, {style: function (feature) { return {color: 'green', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.75 };}});   
+MUNIBD_geojson_Layer.bindPopup(function (layer) { return L.Util.template('<p><strong>NAME: {NAME} <br> CITY: {CITY} <br> MUNICIPAL_NUMBER: {MUNICIPAL_} </strong>  .</p>', layer.feature.properties); });
+MUNIBD_geojson_Layer.addTo(map)
+
+var ZIPCODE_geojson_Layer = L.geoJson(ZIPCODE_geojson, {style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}});   
+ZIPCODE_geojson_Layer.bindPopup(function (layer) { return L.Util.template('<p><strong>City: {CITY} <br> Zip Code: {ZIP_CODE} <br> Alternative name: {ALTERNATE_}</strong>  .</p>', layer.feature.properties); });
+// ZIPCODE_geojson_Layer.addTo(map)
+
+var POLICEDISTRICT_geojson_Layer = L.geoJson(POLICEDISTRICT_geojson, {style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}});   
+POLICEDISTRICT_geojson_Layer.bindPopup(function (layer) { return L.Util.template('<p><strong>DISTRICT: {DISTRICT} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// POLICEDISTRICT_geojson_Layer.addTo(map);
+
+var DPIE_DISTRICTS_geojson_Layer = L.geoJson(DPIE_DISTRICTS_geojson, {style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}});   
+DPIE_DISTRICTS_geojson_Layer.bindPopup(function (layer) { return L.Util.template('<p><strong>DISTRICT: {DISTRICT} <br> INPECTOR_AREAS: {INPECTOR_A} </strong>  .</p>', layer.feature.properties); });
+// DPIE_DISTRICTS_geojson_Layer.addTo(map)
+
+var POLICEBEATS_geojson_Layer = L.geoJson(POLICEBEATS_geojson, {style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}});   
+POLICEBEATS_geojson_Layer.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// DPIE_DISTRICTS_geojson_Layer.addTo(map)
+
+
+// var POLICEBEATS_geojson_Layer_B12 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B12') return true }  
+//     , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}});   
+//     POLICEBEATS_geojson_Layer_B12.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+
+
+// var POLICEBEATS_geojson_Layer_D2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D2') return true }  
+//     , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}});   
+//     POLICEBEATS_geojson_Layer_D2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+
+
+var POLICEBEATS_geojson_Layer_Styles = {
+    radius: 8,
+    fillColor: "#ff7800",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.5
+};
+
+// var POLICEBEATS_geojson_Layer_bindPopup = {
+//     radius: 8,
+//     fillColor: "#ff7800",
+//     color: "#000",
+//     weight: 1,
+//     opacity: 1,
+//     fillOpacity: 0.8
+// };
+
+var POLICEBEATS_geojson_Layer_A1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A1') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_A1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_A11 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A11') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_A11.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_A12 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A12') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_A12.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_A13 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A13') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_A13.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_A2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A2') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_A2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_A3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A3') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_A3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_A4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A4') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_A4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_A5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A5') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_A5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_A6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A6') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_A6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_A7 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A7') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_A7.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_B1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B1') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_B1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_B11 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B11') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_B11.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_B12 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B12') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_B12.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_B2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B2') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_B2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_B21 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B21') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_B21.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_B22 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B22') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_B22.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_B3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B3') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_B3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_B31 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B31') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_B31.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_B4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B4') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_B4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_B5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B5') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_B5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_B51 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B51') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_B51.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_B6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B6') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_B6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_B61 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B61') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_B61.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_B62 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B62') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_B62.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_B63 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B63') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_B63.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_B7 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B7') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_B7.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_C1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'C1') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_C1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_C2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'C2') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_C2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_C3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'C3') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_C3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_C4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'C4') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_C4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_C5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'C5') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_C5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_C6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'C6') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_C6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_D1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D1') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_D1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_D2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D2') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_D2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_D21 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D21') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_D21.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_D3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D3') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_D3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_D31 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D31') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_D31.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_D4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D4') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_D4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_D41 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D41') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_D41.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_D5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D5') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_D5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_D6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D6') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_D6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_E1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E1') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_E1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_E11 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E11') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_E11.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_E2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E2') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_E2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_E3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E3') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_E3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_E4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E4') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_E4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_E41 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E41') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_E41.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_E5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E5') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_E5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_E51 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E51') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_E51.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_E6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E6') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_E6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_E61 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E61') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_E61.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_F1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'F1') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_F1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_F2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'F2') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_F2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_F3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'F3') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_F3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_F4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'F4') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_F4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_F5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'F5') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_F5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_F6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'F6') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_F6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_F7 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'F7') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_F7.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_G1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G1') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_G1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_G12 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G12') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_G12.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_G2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G2') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_G2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_G21 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G21') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_G21.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_G22 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G22') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_G22.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_G3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G3') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_G3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_G31 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G31') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_G31.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_G4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G4') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_G4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_G43 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G43') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_G43.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_G5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G5') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_G5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_G51 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G51') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_G51.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_G6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G6') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_G6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_G7 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G7') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_G7.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_H1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'H1') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_H1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_H11 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'H11') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_H11.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_H2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'H2') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_H2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_H3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'H3') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_H3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_H31 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'H31') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_H31.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_H4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'H4') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_H4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_H5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'H5') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_H5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_H6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'H6') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_H6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_H7 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'H7') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_H7.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_J1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'J1') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_J1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_J2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'J2') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_J2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_J3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'J3') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_J3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_J31 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'J31') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_J31.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_J4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'J4') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_J4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_J5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'J5') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_J5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_J6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'J6') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_J6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_K1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'K1') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_K1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_K2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'K2') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_K2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_K3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'K3') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_K3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_K4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'K4') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_K4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_K41 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'K41') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_K41.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_K5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'K5') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_K5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_K6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'K6') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_K6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_W1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'W1') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_W1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_W2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'W2') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_W2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_W3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'W3') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_W3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_W4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'W4') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_W4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_W5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'W5') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_W5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+var POLICEBEATS_geojson_Layer_W6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'W6') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_W6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+
+
+
+// var POLICEBEATS_geojson_Layer_A1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A1') return true } , style: POLICEBEATS_geojson_Layer_Styles }); POLICEBEATS_geojson_Layer_A1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_A11 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A11') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_A11.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_A12 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A12') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_A12.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_A13 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A13') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_A13.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_A2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A2') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_A2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_A3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A3') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_A3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_A4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A4') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_A4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_A5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A5') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_A5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_A6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A6') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_A6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_A7 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'A7') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_A7.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_B1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B1') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_B1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_B11 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B11') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_B11.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_B12 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B12') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_B12.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_B2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B2') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_B2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_B21 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B21') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_B21.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_B22 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B22') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_B22.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_B3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B3') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_B3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_B31 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B31') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_B31.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_B4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B4') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_B4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_B5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B5') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_B5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_B51 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B51') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_B51.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_B6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B6') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_B6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_B61 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B61') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_B61.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_B62 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B62') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_B62.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_B63 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B63') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_B63.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_B7 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'B7') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_B7.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_C1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'C1') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_C1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_C2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'C2') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_C2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_C3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'C3') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_C3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_C4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'C4') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_C4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_C5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'C5') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_C5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_C6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'C6') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_C6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_D1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D1') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_D1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_D2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D2') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_D2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_D21 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D21') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_D21.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_D3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D3') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_D3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_D31 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D31') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_D31.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_D4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D4') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_D4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_D41 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D41') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_D41.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_D5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D5') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_D5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_D6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'D6') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_D6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_E1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E1') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_E1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_E11 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E11') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_E11.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_E2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E2') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_E2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_E3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E3') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_E3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_E4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E4') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_E4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_E41 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E41') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_E41.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_E5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E5') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_E5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_E51 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E51') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_E51.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_E6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E6') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_E6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_E61 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'E61') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_E61.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_F1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'F1') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_F1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_F2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'F2') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_F2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_F3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'F3') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_F3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_F4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'F4') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_F4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_F5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'F5') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_F5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_F6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'F6') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_F6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_F7 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'F7') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_F7.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_G1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G1') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_G1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_G12 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G12') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_G12.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_G2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G2') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_G2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_G21 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G21') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_G21.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_G22 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G22') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_G22.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_G3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G3') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_G3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_G31 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G31') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_G31.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_G4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G4') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_G4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_G43 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G43') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_G43.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_G5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G5') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_G5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_G51 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G51') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_G51.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_G6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G6') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_G6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_G7 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'G7') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_G7.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_H1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'H1') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_H1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_H11 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'H11') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_H11.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_H2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'H2') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_H2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_H3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'H3') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_H3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_H31 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'H31') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_H31.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_H4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'H4') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_H4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_H5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'H5') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_H5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_H6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'H6') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_H6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_H7 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'H7') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_H7.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_J1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'J1') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_J1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_J2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'J2') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_J2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_J3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'J3') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_J3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_J31 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'J31') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_J31.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_J4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'J4') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_J4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_J5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'J5') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_J5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_J6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'J6') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_J6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_K1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'K1') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_K1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_K2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'K2') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_K2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_K3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'K3') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_K3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_K4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'K4') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_K4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_K41 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'K41') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_K41.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_K5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'K5') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_K5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_K6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'K6') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_K6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_W1 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'W1') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_W1.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_W2 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'W2') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_W2.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_W3 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'W3') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_W3.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_W4 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'W4') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_W4.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_W5 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'W5') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_W5.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+// var POLICEBEATS_geojson_Layer_W6 = L.geoJson(POLICEBEATS_geojson, {filter: function (feature) {if (feature.properties.BEAT === 'W6') return true } , style: function (feature) { return {color: 'blue', weight: 1, fillColor: 'rgba(20%, 100%, 80%, 0.5)', fillOpacity: 0.25 };}}); POLICEBEATS_geojson_Layer_W6.bindPopup(function (layer) { return L.Util.template('<p><strong>POLICE BEAT: {BEAT} <br>DISTRICT: {DISTRICT} <br> SECTOR: {SECTOR} <br> SQMILES: {SQMILES} </strong>  .</p>', layer.feature.properties); });
+
+
+
+
+
+
+// L.geoJson(POLICEBEATS_geojson, {
+// 	// coordsToLatLngs: function (feature, layer) {
+// 		 console.log(layer.feature.geometry.coordinates);
+// 	}
+// });
+
+// L.geoJson(POLICEBEATS_geojson,{              
+//             onEachFeature: function (feature, layer) {              
+//                   //create new polygon
+//                   polygon = L.polygon(newPolygon.toGeoJSON().geometry.coordinates, geojsonFeature);           
+//             }
+
+//         })
+
+
+// L.control.layers({
+//     'Municipality Boundary' : MUNIBD_geojson_Layer
+//     , 'Police Beats' : POLICEBEATS_geojson_Layer    
+//     , 'Police Districts' : POLICEDISTRICT_geojson_Layer
+//     , 'Inspection Districts': DPIE_DISTRICTS_geojson_Layer
+//     , 'PG County ZipCodes': ZIPCODE_geojson_Layer    
+//     // , 'Address Points' : AddressPointsLayers
+// }, null, {collapsed:false}).addTo(map);
+
+// console.log(POLICEBEATS_geojson_Layer);
+
+
+        // The tree containing the layers
+
+var someObj = {}
+
+L.geoJson(POLICEBEATS_geojson, {onEachFeature: function (feature, layer) {
+  var BEAT = feature.properties.BEAT;
+  var COORD = feature.geometry.coordinates;
+  // console.log(COORD)
+  someObj[BEAT] = COORD;
+  // return COORD;
+  // console.log( {'label': BEAT, layer: 'L.polygon(['+COORD+'])'})
+}})
+
+console.log(someObj['F7'])
+
+
+var someObj02 = {}
+
+var geojson = L.geoJSON(POLICEBEATS_geojson, 
+{
+   filter: function (feature) {if (feature.properties.BEAT === "A7") return true }  
+,
+    onEachFeature: function (feature, layer) {
+      var BEAT = feature.properties.BEAT;
+      var COORD = feature.geometry.coordinates;
+      // console.log(COORD)
+      // someObj02[BEAT] = COORD;
+      // return COORD;
+      // console.log( {'label': BEAT, layer: 'L.polygon(['+COORD+'])'})
+      // console.log(feature.geometry.type)
+      },
+
+      coordsToLatLng: function (p) {
+        // p = proj4(fromProjection,toProjection,p);  // reproject each point
+        p = [p[1],p[0]]    // swap the values
+        // console.log(p);          // return the lat/lng pair
+        someObj02[BEAT] = p
+    }  
+})
+
+console.log('someObj02')
+console.log(someObj02)
+
+
+
+// function getBeatGeocodes(beatstr){
+// L.geoJSON(POLICEBEATS_geojson, 
+// { filter: function (feature) {if (feature.properties.BEAT === beatstr) return true },
+//   onEachFeature: function (feature, layer) {
+//       var BEAT = feature.properties.BEAT;
+//       var COORD = feature.geometry.coordinates;
+//       return COORD;
+//       }
+// })
+
+// }
+
+
+// console.log(getBeatGeocodes("A7"))
+
+
+
+
+
+
+// data.features = data.features.filter(function(d){console.log(d.properties.name) ; return d.properties.name=="France"})
+
+
+// // Load external data and boot
+// d3.json(POLICEBEATS_geojson, function(data){
+
+// // Filter data
+// data.features = data.features.filter(function(d){console.log(d.geometry.coordinates) ; return d.properties.BEAT=="A7"})
+
+// console.log(data.features)
+
+// // // Draw the map
+// // svg.append("g")
+// //     .selectAll("path")
+// //     .data(data.features)
+// //     .enter()
+// //     .append("path")
+// //       .attr("fill", "grey")
+// //       .attr("d", d3.geoPath()
+// //           .projection(projection)
+// //       )
+// //     .style("stroke", "none")
+// })
+
+
+
+
+var PoliceBeatArr = [];
+
+for(var i = 0; i <= POLICEBEATS_geojson.features.length-1; i= i+1){
+          // console.log(POLICEBEATS_geojson.features[i]);
+        var BEAT = POLICEBEATS_geojson.features[i].properties.BEAT;
+        var COORD = POLICEBEATS_geojson.features[i].geometry.coordinates;
+        // PoliceBeatArr.push({'label': BEAT, layer: COORD});
+
+        console.log(BEAT, COORD);
+
+
+        // PiliceBeatArr.push({label:  BEAT, layer: L.polygon(COORD)} );
+        // console.log(JSON.Parse("{label: "+ BEAT +", layer: L.polygon(["+COORD+"])}"));
+        // console.log(COORD);
+        // console.log(BEAT)
+        // myJson = {label: BEAT , layer: "L.polygon("+COORD+")"};
+        // PiliceBeatArr.push(myJson);
+}
+
+// console.log(PoliceBeatArr[0]);
+
+// for(var i =0; i<= PoliceBeatArr.length)
+
+// function chekWhatHappens(){
+//   somearr = [];
+//     for(var i = 0; i <= PoliceBeatArr.length-1; i = i+1 ){
+//       // console.log(PoliceBeatArr[i].label, PoliceBeatArr[i].layer);
+//       somearr.push({label:  PoliceBeatArr[i].label, layer: L.polygon(PoliceBeatArr[i].layer)});
+//       }
+//       console.log( somearr);
+// }
+
+// console.log(PiliceBeatArr[1].layer)
+
+// var stringabc = JSON.stringify(PoliceBeatArr);
+//     stringabc.replace (/["]/g,'');
+
+    // console.log(PoliceBeatArr)
+
+// for(var i = 0; i <= PiliceBeatArr.length-1; i= i+1){
+//   console.log(PiliceBeatArr[i])
+
+// }
+
+// var stringabc = JSON.stringify(PiliceBeatArr);
+// console.log(stringabc);    
+
+
+
+
+
+
+// console.log(L.geoJson.coordsToLatLngs(POLICEBEATS_geojson));
+
+
+
+
+
+// L.geoJSON(POLICEBEATS_geojson, {
+//    filter: function (feature) {if (feature.properties.BEAT === 'A7') return true }  
+// ,  coordsToLatLng: function (p) {
+//         // console.log(feature.properties.coordinates.length);
+//         // console.log(p);
+//         // if (p.length == 1) {
+//           p = [p[1],p[0]]    // swap the values
+//           apparr.push(p);
+//     }  
+// })
+
+
+
+
+
+
+var baseTree = [
+{
+label: 'PG County Map Layers', collapsed: false,
+children: [
+{label: ' Municipality Boundary', layer: MUNIBD_geojson_Layer, name: 'PG County Layers'},
+{label: ' PG County ZipCodes', layer: ZIPCODE_geojson_Layer, name : 'PG County Layers'},
+{label: ' Inspection Districts', layer: DPIE_DISTRICTS_geojson_Layer, name: 'PG County Layers'},
+// {label: ' Police Beats Layer', layer: POLICEBEATS_geojson_Layer, name: 'PG County Layers'},
+{label: ' Police Beats', selectAllCheckbox: true, collapsed: true
+, children: [ 
+        {label:' A1',layer: POLICEBEATS_geojson_Layer_A1}
+      , {label:' A11',layer: POLICEBEATS_geojson_Layer_A11}
+      , {label:' A12',layer: POLICEBEATS_geojson_Layer_A12}
+      , {label:' A13',layer: POLICEBEATS_geojson_Layer_A13}
+      , {label:' A2',layer: POLICEBEATS_geojson_Layer_A2}
+      , {label:' A3',layer: POLICEBEATS_geojson_Layer_A3}
+      , {label:' A4',layer: POLICEBEATS_geojson_Layer_A4}
+      , {label:' A5',layer: POLICEBEATS_geojson_Layer_A5}
+      , {label:' A6',layer: POLICEBEATS_geojson_Layer_A6}
+      , {label:' A7',layer: POLICEBEATS_geojson_Layer_A7}
+      , {label:' B1',layer: POLICEBEATS_geojson_Layer_B1}
+      , {label:' B11',layer: POLICEBEATS_geojson_Layer_B11}
+      , {label:' B12',layer: POLICEBEATS_geojson_Layer_B12}
+      , {label:' B2',layer: POLICEBEATS_geojson_Layer_B2}
+      , {label:' B21',layer: POLICEBEATS_geojson_Layer_B21}
+      , {label:' B22',layer: POLICEBEATS_geojson_Layer_B22}
+      , {label:' B3',layer: POLICEBEATS_geojson_Layer_B3}
+      , {label:' B31',layer: POLICEBEATS_geojson_Layer_B31}
+      , {label:' B4',layer: POLICEBEATS_geojson_Layer_B4}
+      , {label:' B5',layer: POLICEBEATS_geojson_Layer_B5}
+      , {label:' B51',layer: POLICEBEATS_geojson_Layer_B51}
+      , {label:' B6',layer: POLICEBEATS_geojson_Layer_B6}
+      , {label:' B61',layer: POLICEBEATS_geojson_Layer_B61}
+      , {label:' B62',layer: POLICEBEATS_geojson_Layer_B62}
+      , {label:' B63',layer: POLICEBEATS_geojson_Layer_B63}
+      , {label:' B7',layer: POLICEBEATS_geojson_Layer_B7}
+      , {label:' C1',layer: POLICEBEATS_geojson_Layer_C1}
+      , {label:' C2',layer: POLICEBEATS_geojson_Layer_C2}
+      , {label:' C3',layer: POLICEBEATS_geojson_Layer_C3}
+      , {label:' C4',layer: POLICEBEATS_geojson_Layer_C4}
+      , {label:' C5',layer: POLICEBEATS_geojson_Layer_C5}
+      , {label:' C6',layer: POLICEBEATS_geojson_Layer_C6}
+      , {label:' D1',layer: POLICEBEATS_geojson_Layer_D1}
+      , {label:' D2',layer: POLICEBEATS_geojson_Layer_D2}
+      , {label:' D21',layer: POLICEBEATS_geojson_Layer_D21}
+      , {label:' D3',layer: POLICEBEATS_geojson_Layer_D3}
+      , {label:' D31',layer: POLICEBEATS_geojson_Layer_D31}
+      , {label:' D4',layer: POLICEBEATS_geojson_Layer_D4}
+      , {label:' D41',layer: POLICEBEATS_geojson_Layer_D41}
+      , {label:' D5',layer: POLICEBEATS_geojson_Layer_D5}
+      , {label:' D6',layer: POLICEBEATS_geojson_Layer_D6}
+      , {label:' E1',layer: POLICEBEATS_geojson_Layer_E1}
+      , {label:' E11',layer: POLICEBEATS_geojson_Layer_E11}
+      , {label:' E2',layer: POLICEBEATS_geojson_Layer_E2}
+      , {label:' E3',layer: POLICEBEATS_geojson_Layer_E3}
+      , {label:' E4',layer: POLICEBEATS_geojson_Layer_E4}
+      , {label:' E41',layer: POLICEBEATS_geojson_Layer_E41}
+      , {label:' E5',layer: POLICEBEATS_geojson_Layer_E5}
+      , {label:' E51',layer: POLICEBEATS_geojson_Layer_E51}
+      , {label:' E6',layer: POLICEBEATS_geojson_Layer_E6}
+      , {label:' E61',layer: POLICEBEATS_geojson_Layer_E61}
+      , {label:' F1',layer: POLICEBEATS_geojson_Layer_F1}
+      , {label:' F2',layer: POLICEBEATS_geojson_Layer_F2}
+      , {label:' F3',layer: POLICEBEATS_geojson_Layer_F3}
+      , {label:' F4',layer: POLICEBEATS_geojson_Layer_F4}
+      , {label:' F5',layer: POLICEBEATS_geojson_Layer_F5}
+      , {label:' F6',layer: POLICEBEATS_geojson_Layer_F6}
+      , {label:' F7',layer: POLICEBEATS_geojson_Layer_F7}
+      , {label:' G1',layer: POLICEBEATS_geojson_Layer_G1}
+      , {label:' G12',layer: POLICEBEATS_geojson_Layer_G12}
+      , {label:' G2',layer: POLICEBEATS_geojson_Layer_G2}
+      , {label:' G21',layer: POLICEBEATS_geojson_Layer_G21}
+      , {label:' G22',layer: POLICEBEATS_geojson_Layer_G22}
+      , {label:' G3',layer: POLICEBEATS_geojson_Layer_G3}
+      , {label:' G31',layer: POLICEBEATS_geojson_Layer_G31}
+      , {label:' G4',layer: POLICEBEATS_geojson_Layer_G4}
+      , {label:' G43',layer: POLICEBEATS_geojson_Layer_G43}
+      , {label:' G5',layer: POLICEBEATS_geojson_Layer_G5}
+      , {label:' G51',layer: POLICEBEATS_geojson_Layer_G51}
+      , {label:' G6',layer: POLICEBEATS_geojson_Layer_G6}
+      , {label:' G7',layer: POLICEBEATS_geojson_Layer_G7}
+      , {label:' H1',layer: POLICEBEATS_geojson_Layer_H1}
+      , {label:' H11',layer: POLICEBEATS_geojson_Layer_H11}
+      , {label:' H2',layer: POLICEBEATS_geojson_Layer_H2}
+      , {label:' H3',layer: POLICEBEATS_geojson_Layer_H3}
+      , {label:' H31',layer: POLICEBEATS_geojson_Layer_H31}
+      , {label:' H4',layer: POLICEBEATS_geojson_Layer_H4}
+      , {label:' H5',layer: POLICEBEATS_geojson_Layer_H5}
+      , {label:' H6',layer: POLICEBEATS_geojson_Layer_H6}
+      , {label:' H7',layer: POLICEBEATS_geojson_Layer_H7}
+      , {label:' J1',layer: POLICEBEATS_geojson_Layer_J1}
+      , {label:' J2',layer: POLICEBEATS_geojson_Layer_J2}
+      , {label:' J3',layer: POLICEBEATS_geojson_Layer_J3}
+      , {label:' J31',layer: POLICEBEATS_geojson_Layer_J31}
+      , {label:' J4',layer: POLICEBEATS_geojson_Layer_J4}
+      , {label:' J5',layer: POLICEBEATS_geojson_Layer_J5}
+      , {label:' J6',layer: POLICEBEATS_geojson_Layer_J6}
+      , {label:' K1',layer: POLICEBEATS_geojson_Layer_K1}
+      , {label:' K2',layer: POLICEBEATS_geojson_Layer_K2}
+      , {label:' K3',layer: POLICEBEATS_geojson_Layer_K3}
+      , {label:' K4',layer: POLICEBEATS_geojson_Layer_K4}
+      , {label:' K41',layer: POLICEBEATS_geojson_Layer_K41}
+      , {label:' K5',layer: POLICEBEATS_geojson_Layer_K5}
+      , {label:' K6',layer: POLICEBEATS_geojson_Layer_K6}
+      , {label:' W1',layer: POLICEBEATS_geojson_Layer_W1}
+      , {label:' W2',layer: POLICEBEATS_geojson_Layer_W2}
+      , {label:' W3',layer: POLICEBEATS_geojson_Layer_W3}
+      , {label:' W4',layer: POLICEBEATS_geojson_Layer_W4}
+      , {label:' W5',layer: POLICEBEATS_geojson_Layer_W5}
+      , {label:' W6',layer: POLICEBEATS_geojson_Layer_W6}
+
+
+
+]
+          }
+        ]
+    }
+];
+
+
+
+
+
+
+
+
+
+var lay =  L.control.layers.tree(MUNIBD_geojson_Layer , baseTree 
+, {
+          // namedToggle: false,
+          // selectorBack: false,
+          closedSymbol: '&#8862; &#x1f5c0;',
+          openedSymbol: '&#8863; &#x1f5c1;',
+          // collapseAll: 'Collapse all',
+          // expandAll: 'Expand all',
+          collapsed: false,
+      }
+      );   //.addTo(map);
+
+lay.addTo(map);
+
+
+
+function colorIcon(whichColor){
+    build_iconurl = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-'+whichColor+'.png'
+    return new L.Icon({
+        iconUrl: build_iconurl,
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [18, 28], iconAnchor: [9, 28], popupAnchor: [1, -24], shadowSize: [28, 28]
+      })
+  }
+
+  // LicStatusUnique
+  // LicCategoryUnique
+
+
+// var stringabc = JSON.stringify(PiliceBeatArr);
+//     stringabc.replace (/["]/g,'');
+
+// console.log(stringabc);
+
+
+var LicMilestoneUnique = [];
+var LicTypeUnique = [];
+// var LicTypeAndMileStoneUnique = [];
+
+var LicMilestoneCounts = {};
+var LicTypeCounts = {};
+// var LicTypeAndMileStoneCounts = {};
+
+for(var i = 0; i <= dataLicenses.features.length-1; i= i+1 ){
+  LicMilestoneExtract = dataLicenses.features[i].properties.Milestone_Report;
+  LicTypeExtract = dataLicenses.features[i].properties.License_Category;
+    if(LicMilestoneUnique.indexOf(LicMilestoneExtract)==-1)
+    {
+          LicMilestoneUnique.push(LicMilestoneExtract);
+    }
+    if(LicTypeUnique.indexOf(LicTypeExtract)==-1){
+          LicTypeUnique.push(LicTypeExtract);
+    }
+}
+console.log(LicMilestoneUnique);
+console.log(LicTypeUnique);
+
+
+
+
+
+
+
+
+LicMilestoneCounts = convertArrayToObject(LicMilestoneUnique);
+LicTypeCounts = convertArrayToObject(LicTypeUnique);
+
+console.log(LicMilestoneCounts);
+console.log(LicTypeCounts);
+
+// LicTypeCountsTable = LicTypeCounts;
+
+// console.log('dataLicenses.features.length : ',dataLicenses.features[1].properties.License_Category)
+// console.log('LicTypeCounts : ', LicTypeCountsTable.SFR);
+
+
+for(var i = 0; i <= dataLicenses.features.length-1; i= i+1 ){
+  NewLicMilestoneExtract = dataLicenses.features[i].properties.Milestone_Report;
+  NewLicTypeExtract = dataLicenses.features[i].properties.License_Category;
+  if (!(NewLicMilestoneExtract in LicMilestoneCounts)) {
+      LicMilestoneCounts[NewLicMilestoneExtract] = 0;
+  }
+  LicMilestoneCounts[NewLicMilestoneExtract]++;
+
+  if (!(NewLicTypeExtract in LicTypeCounts)) {
+    LicTypeCounts[NewLicTypeExtract] = 0;
+  }
+  LicTypeCounts[NewLicTypeExtract]++;
+
+}
+
+console.log(LicMilestoneCounts);
+console.log(LicTypeCounts);
+
+
+// <a data-placement="top" data-toggle="popover" data-container="body" data-placement="left" type="button" data-html="true" href="#" id="login">
+    
+//     <span class="glyphicon glyphicon-search" style="margin:3px 0 0 0"></span></a>
+
+
+// function buildDiv(ID, sts){
+  
+//         var div_create = document.createElement('div');
+//         // div_create.type = 'button';
+//         div_create.id = 'div_'+ID.toString();
+//         div_create.className = 'containerDiv';
+//         div_create.style.width = "10px";
+//         div_create.style.height = "10px";
+//         div_create.style.margin = '.5px';
+        
+
+        
+//         div_create.style.display = "inline-block";
+
+//         div_create_a = document.createElement('a');
+//         div_create_a.setAttribute('data-placement', 'top');
+//         div_create_a.setAttribute('data-toggle', 'popover');
+//         div_create_a.setAttribute('data-container', 'body');
+//         div_create_a.setAttribute('data-html', 'true');
+//         div_create_a.type = 'button';
+//         // div_create_a.href = '#';
+//         div_create_a.ID = 'Anchor_'+ID.toString();
+//         div_create_a.innerHTML = '<i class="fa fa-square"></i>';
+
+//         div_create_a_img = document.createElement('img');
+//         // div_create_a_img.setAttribute('src','<i class="fa fa-user"></i>');
+//         div_create_a.appendChild(div_create_a_img);
+
+
+//         if (sts === 'Issued'){
+//           div_create.style.background = "green";
+//         }
+//         else if (sts === 'Processing'){
+//           div_create.style.background = "yellow";
+//         } else {
+//           div_create.style.background = "red";
+//         };
+
+
+
+
+//         div_create.appendChild(div_create_a);
+//         document.getElementsByClassName('maincontainer')[0].appendChild(div_create);
+        
+        
+// }
+
+
+
+
+function buildDiv(ID, sts){
+
+  // return $('<a data-placement="top" data-toggle="popover" data-container="body" data-placement="left" type="button"' +
+  // 'data-html="true" href="#" id= '+ID+'>  <span style="font-size: 1em; color: Tomato;"> <i class="fa fa-square"></i> </span></a> '+
+  // '<div id="popover-content" class="hide"> <input class="LICENID" type="button" data-toggle="modal" data-target="#myModal" '+
+  // 'onclick= fn_btn_License('+ID+') value='+ID+'></div>').appendTo("#mainDivContain");
+
+   $('<div class="containerNoAddress"><a data-placement="bottom" data-toggle="popover" data-container="body" data-placement="left" ' +
+    ' type="button" data-html="true"  id= Anchor_'+ID.toString()+'></a> ' +
+    ' <div id="popover-content" > <input class="LICENID_new"  ID = '+ID.toString()+'  type="button" data-toggle="modal" data-target="#myModal" '+
+    " onclick= fn_btn_License(this) title="+ID.toString()+" value="+ID.toString()+"> </div></div>").appendTo("#mainDivContain");
+
+    var IDStringbtn = document.getElementById(ID.toString());
+
+        if (sts === 'SFR'){
+          IDStringbtn.style.background = "#3D90CE";
+          // IDStringbtn.style.color = "transparant";
+        }
+        else if (sts === 'MFR'){
+          IDStringbtn.style.background = "green";
+        } else {
+          IDStringbtn.style.background = "red";
+        };
+
+
+console.log(ID);
+
+// document.getElementById('mainDivContain').innerHTML = '<div class="container"><a data-placement="top" data-toggle="popover" data-container="body" data-placement="left" type="button" \
+//   data-html="true" href="#" id= "Anchor_'+ID+'">  <span style="font-size: 3em; color: Tomato;"> <i class="fa fa-square"></i> </span>  \
+//   <div id="popover-content" class="hide"> <input class="LICENID" ID = '+ID+' type="button" data-toggle="modal" data-target="#myModal" onclick="fn_btn_License('+ID+')" value='+ID+'></div></div>';
+
+};
+
+  
+
+// $('<p class="addressappend">'+Address4mCounts+'</p>').appendTo('.modal-title');
+
+
+$("[data-toggle=popover]").popover({
+    html: true, 
+	content: function() {
+          return $('#popover-content').html();
+        }
+});
+
+
+console.log('noAddressRecords')
+var noAddressRecords = []
+
+for(var n = 0; n <= dataLicenses.features.length-1; n= n+1 ){
+  LicFullAddress = dataLicenses.features[n].properties.FullAddress;
+  licFlag = dataLicenses.features[n].properties.Flag;
+//   console.log(LicFullAddress)
+  // if(LicFullAddress ===""){
+  //   noAddressRecords.push(dataLicenses.features[n]);
+  //   }
+
+    if(licFlag === null){
+    noAddressRecords.push(dataLicenses.features[n]);
+    }
+
+
+
+}
+
+console.log('noAddressRecords')
+console.log(noAddressRecords)
+
+// for (var i=0; i<= noAddressRecords.length-1; i = i+1){
+//   BldLicenseNum = (noAddressRecords[i].properties.LicenseNum);
+//   BldLicStatus = (noAddressRecords[i].properties.LicStatus)
+//   console.log(BldLicStatus);
+//   buildDiv(BldLicenseNum, BldLicStatus);
+// }
+
+
+$('.div_cal').click(function(event) {
+				var div_cal = $(this).attr('id');
+				//console.log(div_cal);
+				//buildGameButton(20150129);
+				$('#showlistgamedByDate').empty();
+			});
+
+			$('[data-toggle="tooltip"]').tooltip({
+				placement: 'top'
+				,trigger: 'hover'
+			});
+
+// function getCountryByCode() {
+//   return dataLicenses.filter(
+//       function(dataLicenses){ return dataLicenses.FULLADDRESS != "" && dataLicenses.LICSTATUS !=  'Issued' }
+//   );
+// }
+
+
+
+// You can use any function to copy here
+function copyToClipboard(textToCopy) {
+    var input = document.createElement("input");
+    document.body.appendChild(input);
+    input.value = textToCopy;
+    input.select();
+    document.execCommand("Copy");
+    input.remove();
+}
+
+function copyLastColumn(tr) {
+    copyToClipboard(tr.lastElementChild.innerHTML);
+    // alert('copied to clipboard');
+}
+
+// <div class="chkboxinputs" id="LicenseStatusCheckBoxes"></div>
+// <div class="chkboxinputs" id="LicenseCategoryCheckBoxes"></div>
+
+
+
+LicMilestoneUnique.sort();
+var myDiv = document.getElementById("LicenseStatusCheckBoxes");
+
+// function updateLicenseStatus(){
+    for (var i = 0; i < LicMilestoneUnique.length; i++) {
+        var checkBox = document.createElement("input");
+        var label = document.createElement("label");
+        label.className = 'chkbxClass';
+        checkBox.type = "checkbox";
+        checkBox.value = LicMilestoneUnique[i];
+        checkBox.className = 'Milestone_Report';
+        checkBox.name = LicMilestoneUnique[i];
+        checkBox.id = checkBox.value;
+        // checkBox.checked = true;
+
+        if(LicMilestoneUnique[i]=='Waiting for Renewal'){
+          checkBox.checked = false;
+        }
+        else{
+          checkBox.checked = true;
+        }
+
+        console.log(LicMilestoneCounts[LicMilestoneUnique[i]]);
+
+        myDiv.appendChild(checkBox);
+        myDiv.appendChild(label);
+        myDiv.appendChild(document.createElement("br"))
+        label.htmlFor = LicMilestoneUnique[i];
+        // label.appendChild(document.createTextNode(LicMilestoneUnique[i]));
+        label.appendChild(document.createTextNode(LicMilestoneUnique[i]));
+
+    }
+// }
+
+
+LicTypeUnique.sort();
+var catDiv = document.getElementById("LicenseCategoryCheckBoxes");
+
+  for (var i = 0; i < LicTypeUnique.length; i++) {
+      var checkBox = document.createElement("input");
+      var label = document.createElement("label");
+      label.className = 'chkbxClass '+LicTypeUnique[i];
+      label.ID = 'lbl'+LicTypeUnique[i];
+      checkBox.type = "checkbox";
+      checkBox.value = LicTypeUnique[i];
+      checkBox.className = 'License_Category';
+      checkBox.name = LicTypeUnique[i];
+      checkBox.id = checkBox.value;
+      // checkBox.checked = true;
+      // console.log(checkBox.id);
+
+      if(LicTypeUnique[i]=='SFR'){
+        checkBox.checked = true;
+      }
+      else{
+        checkBox.checked = false;
+      }
+
+      console.log(LicTypeCounts[LicTypeUnique[i]]);
+      catDiv.appendChild(checkBox);
+      catDiv.appendChild(label);
+      catDiv.appendChild(document.createElement("br"))
+      label.htmlFor = LicTypeUnique[i];
+      // label.appendChild(document.createTextNode(LicTypeUnique[i]));
+      label.appendChild(document.createTextNode(LicTypeUnique[i]+"   ("+LicTypeCounts[LicTypeUnique[i]]+")"));
+
+
+      var lblID = document.getElementById((label.className).toString());
+
+      // if (LicTypeUnique[i] === 'SFR'){
+      //       lblID.style.color = "blue";
+      //     // IDStringbtn.style.color = "transparant";
+      //   }
+      //   else if (LicTypeUnique[i] === 'MFR'){
+      //     lblID.style.color = "green";
+      //   } else {
+      //     lblID.style.color = "yellow";
+      //   };
+
+
+  }
+
+let checkboxStates;
+
+// '<input class="LICENID" ID = '+feature.properties.LicenseNum+' type="button" data-toggle="modal" data-target="#myModal" onclick="fn_btn_License(this)" value='+feature.properties.LicenseNum+'>');
+
+
+const geojsonLayer = L.geoJSON(null,{
+	filter: (feature) => {
+    const isLicense_CategoryChecked = checkboxStates.License_Category.includes(feature.properties.License_Category);
+    const isMilestone_ReportChecked = checkboxStates.Milestone_Report.includes(feature.properties.Milestone_Report);
+    return isLicense_CategoryChecked && isMilestone_ReportChecked; //only true if both are true
+    }
+    ,   
+     pointToLayer: function(feature, latlng) {
+        // return new L.CircleMarker(LicStatus, {radius: 10, fillOpacity: 0.85});
+        // console.log(feature.properties.LicStatus);
+        // console.log(feature.properties.LicenseNum);
+
+        switch (feature.properties.License_Category ) {
+            
+            case 'SFR':
+                      if (feature.properties.Flag === null){buildDiv(feature.properties.LicenseNum, feature.properties.License_Category);}
+                      return new L.Marker(latlng
+                          , { icon: colorIcon('blue')
+                          , title: feature.properties.FullAddress}).bindPopup('<label>'+feature.properties.FullAddress+'</label><br><input class="LICENID btn btn-primary" ID = '+feature.properties.LicenseNum+' type="button" data-toggle="modal" data-target="#myModal" onclick="fn_btn_License(this)" value='+feature.properties.LicenseNum+'>');
+
+            case 'MFR':   
+                      if (feature.properties.Flag === null){buildDiv(feature.properties.LicenseNum, feature.properties.License_Category);}
+                      return new L.Marker(latlng
+                      , { icon: colorIcon('green')
+                      , title: feature.properties.FullAddress}).bindPopup('<label>'+feature.properties.FullAddress+'</label><br><input class="LICENID btn btn-success" ID = '+feature.properties.LicenseNum+' type="button" data-toggle="modal" data-target="#myModal" onclick="fn_btn_License(this)" value='+feature.properties.LicenseNum+'>');
+
+            // case 'Abandoned' && 'AppDenied' && 'Denied' && 'Open' && 'OutApplcnt' && 'Void':   
+            default :
+                    if (feature.properties.Flag === null){buildDiv(feature.properties.LicenseNum, feature.properties.License_Category);}
+                    return new L.Marker(latlng
+                    , { bounceOnAdd:  true, bounceOnAddOptions: {duration: 1500, height: 100, loop: 2}, icon: colorIcon('red')
+                    , title: feature.properties.FullAddress}).bindPopup('<label>'+feature.properties.FullAddress+'</label><br><input class="LICENID btn btn-danger" ID = '+feature.properties.LicenseNum+' type="button" data-toggle="modal" data-target="#myModal" onclick="fn_btn_License(this)" value='+feature.properties.LicenseNum+'>');
+                }                            
+        }
+}).addTo(map)
+
+console.log('where am i : 2');
+
+var controlSearch = new L.Control.Search({
+                position:'topleft',
+                layer: geojsonLayer,
+                propertyName: 'FullAddress',
+                zoom: 15
+	    }).on('search:locationfound', function(e) {
+			    e.layer.openPopup();
+});
+
+map.addControl( controlSearch );  
+
+function updateCheckboxStates() {
+	checkboxStates = { License_Category:[], Milestone_Report: [] }
+	for (let input of document.querySelectorAll('input')) {
+  	if(input.checked) {
+    	switch (input.className) {
+      	case 'Milestone_Report': checkboxStates.Milestone_Report.push(input.value); break;
+        case 'License_Category': checkboxStates.License_Category.push(input.value); break;
+      }
+    }
+  }
+}
+
+for (let input of document.querySelectorAll('input')) {
+    input.onchange = (e) => {
+        const myNode = document.getElementById("mainDivContain");
+        myNode.innerHTML = '';
+        geojsonLayer.clearLayers();
+  	    updateCheckboxStates();
+        geojsonLayer.addData(dataLicenses);  
+  }
+}
+
+updateCheckboxStates();
+geojsonLayer.addData(dataLicenses);
+
+
+
+
+
+
+
+
+
+
+
+
+
+function fn_btn_License(link) {
+    // $("[class*=LicenseAppend]").remove();
+    $('#newpopupTable').remove();
+  var clkLinkLicense = link.value;
+  // console.log(clkLinkLicense)
+  console.log('clkLinkLicense: ',clkLinkLicense);
+  var detaiedMailstones = []
+    for (i = 0; mileStoneData.length > i; i = i+1) {
+        if (mileStoneData[i].LICENSENO == clkLinkLicense){
+            // console.log(mileStoneData[i]);
+            detaiedMailstones.push(mileStoneData[i]);
+        }
+    }
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    // Get the button that opens the modal
+    var btn = document.getElementById(clkLinkLicense);
+    // // Get the <span> element that closes the modal
+    // var span = document.getElementsByClassName("close")[0];
+    // When the user clicks on the button, open the modal
+
+    btn.onclick = function() {
+    modal.style.display = "block";
+    }
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    
+    // "LicenseNum":"HOU-0719-2020-SFR","LicStatus":"Void","LicStatusNum":1,"APLICINSPKEY":36350
+    // ,"License_Category":"Single Family Rental","Milestone":"Closed","FullAddress":"15828 PILLER LN, BOWIE, MD, 20716","Flag":"A"
+    var getFullAddress, getMilestone, getLicenseStatus, getLicenseCategory, getAssignedTo, getInspectionResultedBy;
+    for(var n = 0; n <= dataLicenses.features.length-1; n= n+1 ){
+        if( dataLicenses.features[n].properties.LicenseNum === clkLinkLicense ){
+          getFullAddress = dataLicenses.features[n].properties.FullAddress;
+          getAssignedTo = dataLicenses.features[n].properties.AssignTo;
+          getInspectionResultedBy = dataLicenses.features[n].properties.Inspection_Result_By;
+          getMilestone = dataLicenses.features[n].properties.Milestone;
+          getMilestoneRpt = dataLicenses.features[n].properties.Milestone_Report;
+          getLicenseStatus = dataLicenses.features[n].properties.LicStatus;
+          getLicenseCategory = dataLicenses.features[n].properties.License_Category;
+        }
+    }
+    // {"LICENSENO":"11630-2020-0","LICSTATUS":"Issued","ISSDTTM":"2020-12-09T15:43:25","APLICKEY":42537
+    // ,"APLICPROCESSSTATEKEY":1058,"APLICSTATLOGKEY":84054,"LICSTATUSCODE":"Open","CODE":"PreIntake"
+    // ,"STATUSDTTM":"2020-10-08T02:09:35.763","LICCAT":"SFR","STATUSBY":"INFOR","CMPTRGEN":null}
+
+    // $('<p class="LicenseAppend"> License Number: '+clkLinkLicense+'</p>').appendTo('.modal-title');
+    // $('<p class="LicenseAppend"> License Number: '+getFullAddress+'</p>').appendTo('.modal-title');
+    // $('<p class="LicenseAppend"> License Number: '+getLicenseStatus+'</p>').appendTo('.modal-title');
+    // $('<p class="LicenseAppend"> License Number: '+getLicenseCategory+'</p>').appendTo('.modal-title');
+    // $('<p class="LicenseAppend"> License Number: '+getMilestone+'</p>').appendTo('.modal-title');
+
+    $('<TABLE id="newpopupTable"> ' + 
+    '<TR ondblclick="copyLastColumn(this)"> <TD> License No. </TD> <TD> '+clkLinkLicense+'</TD> </TR>'+
+    '<TR ondblclick="copyLastColumn(this)"> <TD> License Status </TD> <TD id = "StatusBGcolor">'+getLicenseStatus+'</TD> </TR> '+
+    '<TR ondblclick="copyLastColumn(this)"> <TD> Full Address </TD> <TD>'+getFullAddress+'</TD> </TR> '+
+    '<TR ondblclick="copyLastColumn(this)"> <TD> Assigned To </TD> <TD>'+getAssignedTo+'</TD> </TR> '+
+    '<TR ondblclick="copyLastColumn(this)"> <TD> Inspection Resulted By </TD> <TD>'+getInspectionResultedBy+'</TD> </TR> '+
+    '<TR ondblclick="copyLastColumn(this)"> <TD> License Category </TD> <TD>'+getLicenseCategory+'</TD> </TR> '+
+    '<TR ondblclick="copyLastColumn(this)"> <TD> Milestone Classification </TD> <TD>'+getMilestoneRpt+'</TD> </TR> '+
+    '<TR ondblclick="copyLastColumn(this)"> <TD> Current Milestone </TD> <TD>'+getMilestone+'</TD> </TR> </TABLE>').appendTo('.modal-header');
+
+    $(document).ready(function(){
+        $('#StatusBGcolor').each(function(){
+          console.log($(this).text());
+            if ($(this).text() == 'Processing') {
+                $(this).css('background-color','yellow');
+            }
+            else if ($(this).text() == 'Issued') {
+                $(this).css('background-color','green');
+                $(this).css('color','white');
+            }
+            else{
+                $(this).css('background-color','red');
+                $(this).css('color','white');
+            }
+        });
+    });
+
+    $(document).ready(function() {
+
+          $('#Licdetails').DataTable( {
+                data:detaiedMailstones,
+                    destroy: true,
+                    searching: false,
+                    // "columnDefs": [
+                    //     { "width": "100px", "targets": 1 }],
+                    "columns": [
+                    { title : "Milestone Classification" , "data": "CODE_MAPPING" },
+                    { title : "Milestone Description" , "data": "CODE" },
+                    { title : "Status Date" , "data": "STATUSDTTM", "width": "220px" },
+                    // { title : "Application Process Status Key" , "data": "APLICPROCESSSTATEKEY" },
+                    { title : "Status" , "data": "LICSTATUSCODE" },
+                    { title : "Status By" , "data": "STATUSBY" },
+                ],
+                "order": [[ 2, "desc" ]]
+                , "pageLength": 50
+                , "bLengthChange": false
+                , "bInfo":false
+                , "paging": false
+            } );
+        } );
+        
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var localStorageSpace = function(){
+    var allStrings = '';
+    for(var key in window.localStorage){
+        if(window.localStorage.hasOwnProperty(key)){
+            allStrings += window.localStorage[key];
+        }
+    }
+    return allStrings ? 3 + ((allStrings.length*16)/(8*1024)) + ' KB' : 'Empty (0 KB)';
+};
+console.log(localStorageSpace());
+
+var storageIsFull = function () {
+    var size = localStorageSpace(); // old size
+    // try to add data
+    var er;
+    try {
+         window.localStorage.setItem("test-size", "1");
+    } catch(er) {}
+    // check if data added
+    var isFull = (size === localStorageSpace());
+    window.localStorage.removeItem("test-size");
+    return isFull;
+}
+console.log(storageIsFull());
+
+
+
+
+
+
+
+
+
+
+function setBasemap (basemap) {
+if (layer) {
+    map.removeLayer(layer);
+}
+
+layer = L.esri.basemapLayer(basemap);
+
+map.addLayer(layer);
+
+if (layerLabels) {
+    map.removeLayer(layerLabels);
+}
+
+if (
+    basemap === 'ShadedRelief' ||
+    // basemap === 'Oceans' ||
+    basemap === 'Gray' ||
+    basemap === 'DarkGray' ||
+    basemap === 'Terrain'
+) {
+    layerLabels = L.esri.basemapLayer(basemap + 'Labels');
+    map.addLayer(layerLabels);
+} else if (basemap.includes('Imagery')) {
+    layerLabels = L.esri.basemapLayer('ImageryLabels');
+    map.addLayer(layerLabels);
+}
+}
+
+document.querySelector('#basemaps').addEventListener('change', function (e) {
+    var basemap = e.target.value;
+    setBasemap(basemap);
+});
+
+
+
+$("#output").hide();
+
+
+// console.log(document.getElementById('output').getElementsByClassName("pvtAxisLabel")[0].innerText);
+
+
+// document.getElementById('output').getElementsByClassName("pvtAxisLabel")[0].textContent  = "";
+// document.getElementById('output').getElementsByClassName("pvtAxisLabel")[1].textContent  = "";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
